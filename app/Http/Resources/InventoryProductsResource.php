@@ -18,11 +18,8 @@ class InventoryProductsResource extends JsonResource
             'id' => $this->id,
             'product_id' => $this->product_id,
             'product_name' => $this->product->name,
-            'quantity' =>collect($this->exportInventoryProduct)->map(function($a){
-                return $a->quantity;
-            }),
+            'quantity' => $this->quantity
         
-            'quantity1' =>$this->exportInventoryProduct
         ];
     }
 }
