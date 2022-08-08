@@ -76,4 +76,7 @@ Route::post('delete_export_by_id/{export_id}', [exportController::class, 'destro
 Route::post('update_export_inventory_products_by_export_id/{export_id}', [ExportInventoryProductController::class, 'update']);
 Route::post('delete_export_inventory_products_by_export_id/{export_inventory_product_id}', [ExportInventoryProductController::class, 'destroy']);
 
+Route::post('get_imports_store_inventory',[StoreInventoryController::class,'findImports']);
+Route::post('get_exports_store_inventory',[StoreInventoryController::class,'findExports']);
+
 // });
