@@ -47,11 +47,13 @@ class StoreInventoryController extends ApiController
         $imports = Import::whereBetween('created_at', [$dateS->format('Y-m-d')." 00:00:00", $dateE->format('Y-m-d')." 23:59:59"])->get();
 
         $total = 0;
+        $count = 0;
         foreach($imports as $import){
             $total += $import->total_price;
+            $count += 1;
         }
 
-        return  $this->success(new StoreInventoryResource($imports, $total), 200);
+        return  $this->success(new StoreInventoryResource($imports, $total, $count), 200);
     }
 
     /**
@@ -67,11 +69,13 @@ class StoreInventoryController extends ApiController
 
         $exports = export::whereBetween('created_at', [$dateS->format('Y-m-d')." 00:00:00", $dateE->format('Y-m-d')." 23:59:59"])->get();
         $total = 0;
+        $count = 0;
         foreach($exports as $export){
             $total += $export->total_price;
+            $count+=1;
         }
 
-        return  $this->success(new StoreInventoryResource1($exports, $total), 200);
+        return  $this->success(new StoreInventoryResource1($exports, $total, $count), 200);
     }
 
     /**

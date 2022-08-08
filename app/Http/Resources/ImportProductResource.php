@@ -16,9 +16,11 @@ class ImportProductResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'pruducts'=> $this->product->name,
-            'import'=> $this->import,
-            'quantity'=> $this->quantity 
-        ];    
+            'pruducts_id' => $this->product->id,
+            'pruducts_name' => $this->product->name,
+            'import_id' => $this->import->id,
+            'import_bill_number' => $this->import->bill_number,
+            'quantity' => $this->quantity
+        ];
     }
 }

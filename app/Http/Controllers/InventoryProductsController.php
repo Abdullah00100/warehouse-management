@@ -47,7 +47,7 @@ class InventoryProductsController extends ApiController
             $inventoryproduct->update();
             $message = 'Updated InventoryProduct successfully';
         } else {
-            $inventoryproduct = InventoryProduct::create($request->all());
+            $inventoryproduct = inventoryProduct::create($request->all());
         }
         return $this->success(new InventoryProductsResource($inventoryproduct), 200, 'added product saccessfully');
     }
@@ -62,7 +62,7 @@ class InventoryProductsController extends ApiController
     {
 
         try {
-            $inventory_products = InventoryProduct::find($inventory_products);
+            $inventory_products = inventoryProduct::find($inventory_products);
 
             return $this->success(new InventoryProductsResource($inventory_products), 200);
         } catch (Exception $ex) {
@@ -80,7 +80,7 @@ class InventoryProductsController extends ApiController
     {
 
         try {
-            $inventory_products = InventoryProduct::find($inventory_products);
+            $inventory_products = inventoryProduct::find($inventory_products);
 
             return $this->success(new InventoryProductsResource($inventory_products), 200);
         } catch (Exception $ex) {
@@ -97,7 +97,7 @@ class InventoryProductsController extends ApiController
      */
     public function update(InventoryProductsRequest $request, $inventory_products)
     {
-        $inventory_products = InventoryProduct::find($inventory_products);
+        $inventory_products = inventoryProduct::find($inventory_products);
         if ($inventory_products) {
             $inventory_products->update($request->all());
             return $this->success(new InventoryProductsResource($inventory_products), 200, 'Department updated successfully');
@@ -115,7 +115,7 @@ class InventoryProductsController extends ApiController
      */
     public function destroy($inventory_products)
     {
-        $inventory_products = InventoryProduct::find($inventory_products);
+        $inventory_products = inventoryProduct::find($inventory_products);
         if ($inventory_products) {
             $inventory_products->delete();
             return $this->responseDelete();

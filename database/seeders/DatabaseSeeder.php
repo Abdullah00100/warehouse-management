@@ -22,7 +22,13 @@ class DatabaseSeeder extends Seeder
             InventoryProductSeeder::class,
             DealerSeeder::class,
             ImportSeeder::class,
-            ImportProductSeeder::class
+            ImportProductSeeder::class,
+            RoleTableSeeder::class,
+            UserTableSeeder::class,
+            ExportSeeder::class,
+            ExportInventoryProductSeeder::class,
+
+
         ]);
     }
 }

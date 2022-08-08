@@ -15,14 +15,11 @@ return new class extends Migration
     {
         Schema::create('imports', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('dealer_id');
+            $table->foreignId('dealer_id')->nullable()->constrained('dealers')->cascadeOnDelete();
             $table->integer('bill_number');
             $table->integer('shipping_charge_price');
             $table->integer('total_price')->nullable();
             $table->timestamps();
-            $table->foreign('dealer_id')
-                ->references('id')
-                ->on('dealers');
         });
     }
 

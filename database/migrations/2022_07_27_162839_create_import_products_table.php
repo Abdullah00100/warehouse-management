@@ -15,16 +15,10 @@ return new class extends Migration
     {
         Schema::create('import_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('import_id');
-            $table->unsignedBigInteger('product_id');
+            $table->foreignId('import_id')->nullable()->constrained('imports')->cascadeOnDelete();
+            $table->foreignId('product_id')->nullable()->constrained('products')->cascadeOnDelete();
             $table->integer('quantity');
             $table->timestamps();
-            $table->foreign('import_id')
-                ->references('id')
-                ->on('imports');
-            $table->foreign('product_id')
-            ->references('id')
-            ->on('products');
         });
     }
 

@@ -24,7 +24,6 @@ class ProductRecource extends JsonResource
             'purchasing_price' => $this->purchasing_price,
             'seling_price' => $this->seling_price,
             'note' => $this->note,
-            // 'inventory' => $this->inventoryProduct,
         ];
     }
 }

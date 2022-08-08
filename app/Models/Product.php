@@ -16,6 +16,6 @@ class Product extends Model
     }
 
     public function inventoryProduct(){
-        return  $this->hasOne(InventoryProduct::class);
+        return  $this->hasOne(inventoryProduct::class);
     }
 }

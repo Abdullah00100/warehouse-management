@@ -15,13 +15,9 @@ return new class extends Migration
     {
         Schema::create('inventory_products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('product_id');
+            $table->foreignId('product_id')->nullable()->constrained('products')->cascadeOnDelete();
             $table->integer('quantity')->default('1');
             $table->timestamps();
-            $table->foreign('product_id')
-                ->references('id')
-                ->on('products')
-                ->onDelete('cascade');
         });
     }
 

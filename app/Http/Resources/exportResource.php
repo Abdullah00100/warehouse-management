@@ -22,7 +22,13 @@ class exportResource extends JsonResource
             'shipping_charge_price' => $this->shipping_charge_price,
             'has_received' => $this->has_received,
             'total_price' => $this->total_price,
-            'inventory_products' => $this->inventaryProducts
+            'export_inventory_products' => $this->when('exportInventoryProduct', exportInventoryProductRecource::collection($this->exportInventoryProduct))
+            // 'inventory_products' =>collect($this->inventory_products)->map(function($a){
+            //     return $a->with('exportInventoryProduct')->get();
+            // }),
+            // 'quantity'=>collect($this->exportInventoryProduct)->map(function($a){
+            //              return $a->quantity;
+            //          }),
         ];
     }
 }

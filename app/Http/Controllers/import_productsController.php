@@ -45,7 +45,6 @@ class import_productsController extends ApiController
      */
     public function store(importProductRequest $request)
     {
-        
     }
 
     /**
@@ -55,10 +54,10 @@ class import_productsController extends ApiController
      * @return \Illuminate\Http\Response
      */
     public function show($import_id)
-    {   
+    {
         try {
-            $import = importProduct::where('import_id',$import_id)->get();
-            
+            $import = importProduct::where('import_id', $import_id)->get();
+
             return $this->success(ImportProductResource::collection($import), 200);
         } catch (Exception $ex) {
             return $this->error(['id not founde'], 'The import of this id cannot be found', 404);
@@ -74,8 +73,8 @@ class import_productsController extends ApiController
     public function edit($import_id)
     {
         try {
-            $import = importProduct::where('import_id',$import_id)->get();
-            
+            $import = importProduct::where('import_id', $import_id)->get();
+
             return $this->success(ImportProductResource::collection($import), 200);
         } catch (Exception $ex) {
             return $this->error(['id not founde'], 'The import of this id cannot be found', 404);
@@ -97,10 +96,7 @@ class import_productsController extends ApiController
         $productPriceTotal = 0;
 
         foreach ($request->products as $product) {
-
-
             $inventory_product = inventoryProduct::where('product_id', $product['id'])->first();
-
             // if it already existes just pluse the quantity number than we have added to the old one
             if ($inventory_product) {
                 $inventory_product->quantity += $product['quantity'];
@@ -130,7 +126,7 @@ class import_productsController extends ApiController
 
         $import->total_price = $productPriceTotal + $import->shipping_charge_price;
         $import->update();
-        return $this->success(new ImportsResource($import), 200, 'Added import successfully');
+        return $this->success(new ImportsResource($import), 200, 'Added import successfully and the products mentioned have been added to the inventory');
     }
 
     /**
@@ -143,8 +139,11 @@ class import_productsController extends ApiController
     {
         $importProduct = importProduct::find($import_product_id);
         if ($importProduct) {
+            $inventory_product = inventoryProduct::where('product_id', $importProduct->product_id)->first();
+            $inventory_product->quantity -= $importProduct->quantity;
+            $inventory_product->update();
             $importProduct->delete();
-            return $this->responseDelete();
+            return $this->responseDelete('The invoice and the products added to the inventory mentioned in the invoice have been deleted');
         } else {
             return $this->error('id not founde', 'The ImportProduct of this id cannot be found', 404);
         }

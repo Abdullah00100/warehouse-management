@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class importProductRequest extends FormRequest
+class UpdateImportsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,9 +24,10 @@ class importProductRequest extends FormRequest
     public function rules()
     {
         return [
-            'products' => 'required|array|min:1',
-            'products.*.id' => 'required|exists:products,id',
-            'products.*.quantity' => 'required|integer|min:1|max:256',
+            "bill_number" => "required|unique:imports,bill_number," . $this->import,
+            "shipping_charge_price" => "required|integer|min:1|max:256",
+            "dealer_id" => "required|exists:dealers,id",
+            "total_price" => "min:1|max:256",
         ];
     }
 }

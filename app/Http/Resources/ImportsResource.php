@@ -21,7 +21,7 @@ class ImportsResource extends JsonResource
             'bill_number' => $this->bill_number,
             'shipping_charge_price' => $this->shipping_charge_price,
             'total_price' => $this->total_price,
-            'product' => $this->products
+            'import_product' => $this->when('importProducts', ImportProductResource::collection($this->importProducts))
         ];
     }
 }

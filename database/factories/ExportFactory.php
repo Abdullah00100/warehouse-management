@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Dealer;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,7 +18,11 @@ class ExportFactory extends Factory
     public function definition()
     {
         return [
-            //
+            'dealer_id' => Dealer::all()->random()->id,
+            'shipping_charge_price' => $this->faker->randomNumber(2),
+            'bill_number' => $this->faker->randomNumber(6),
+            'total_price' => $this->faker->randomDigit(4),
+            'has_received' => $this->faker->boolean(),
         ];
     }
 }

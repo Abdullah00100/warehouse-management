@@ -12,6 +12,7 @@ use App\Models\inventoryProduct;
 use Illuminate\Support\Facades\DB;
 
 use App\Http\Requests\ImportsRequest;
+use App\Http\Requests\UpdateImportsRequest;
 use App\Http\Resources\ImportProductResource;
 use App\Http\Resources\ImportsResource;
 use App\Models\Product;
@@ -25,7 +26,6 @@ class ImportsController extends ApiController
      */
     public function index()
     {
-
         return  $this->success(ImportsResource::collection(Import::all()), 200);
     }
 
@@ -77,7 +77,6 @@ class ImportsController extends ApiController
                 $ip->update();
                 $productPriceTotal += $ip->product->purchasing_price * $product['quantity'];
             } else {
-
                 $importProduct = importProduct::create([
                     'import_id' => $import->id,
                     'product_id' => $product['id'],
@@ -89,7 +88,7 @@ class ImportsController extends ApiController
 
         $import->total_price = $productPriceTotal + $import->shipping_charge_price;
         $import->update();
-        return $this->success(new ImportsResource($import), 200, 'Added import successfully');
+        return $this->success(new ImportsResource($import), 200, 'Added import successfully and the products mentioned have been added to the inventory');
     }
 
     /**
@@ -133,18 +132,14 @@ class ImportsController extends ApiController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(ImportsRequest $request, $import)
+    public function update(UpdateImportsRequest $request, $import)
     {
         $import = Import::find($import);
         if ($import) {
-            $import->update([
-                [
-                    'bill_number' => $request->bill_number,
-                    'shipping_charge_price' => $request->shipping_charge_price,
-                    'dealer_id' => $request->dealer_id,
-                    'total_price' => null,
-                ]
-            ]);
+            $data = $request->all();
+            $old_shipping_charge_price = $import->shipping_charge_price;
+            $data['total_price'] = $import->total_price - $old_shipping_charge_price + $request->shipping_charge_price;
+            $import->update($data);
             return $this->success(new ImportsResource($import), 200, 'import updated successfully');
         } else {
             return $this->error('id not founde', 'The import of this id cannot be found', 404);
@@ -161,8 +156,14 @@ class ImportsController extends ApiController
     {
         $import = Import::find($import);
         if ($import) {
+            $importProducts = importProduct::where('import_id', $import->id)->get();
+            foreach ($importProducts as $importProduct) {
+                $inventory_product = inventoryProduct::where('product_id', $importProduct->product_id)->first();
+                $inventory_product->quantity -= $importProduct->quantity;
+                $inventory_product->update();
+            }
             $import->delete();
-            return $this->responseDelete();
+            return $this->responseDelete('The invoice and the products added to the inventory mentioned in the invoice have been deleted');
         } else {
             return $this->error('id not founde', 'The Import of this id cannot be found', 404);
         }

@@ -30,7 +30,9 @@ class exportRequest extends FormRequest
             "dealer_id" => "required|exists:dealers,id",
             "total_price" => "min:1|max:256",
             "has_received" => "min:0|max:1|in:0,1",
-            
+            'inventory_products' => 'required|array|min:1',
+            'inventory_products.*.id' => 'required|exists:inventory_products,id',
+            'inventory_products.*.quantity' => 'required|integer|min:1|max:256',
         ];
     }
 }

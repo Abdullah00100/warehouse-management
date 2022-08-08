@@ -17,13 +17,14 @@ class StoreInventoryResource1 extends JsonResource
      * @param  mixed  $resource
      * @return void
      */
-    public function __construct($resource, $total)
+    public function __construct($resource, $total, $count)
     {
         // Ensure you call the parent constructor
         parent::__construct($resource);
         $this->resource = $resource;
         
         $this->totalMoney = $total;
+        $this->count = $count;
     }
     
     /**
@@ -36,7 +37,8 @@ class StoreInventoryResource1 extends JsonResource
     {   
         return [
             'imports'=> exportsStoreInventoryResource::collection($this),
-            'totalMoney'=> $this->totalMoney 
+            'totalMoney'=> $this->totalMoney,
+            'count'=> $this->count,
         ];    
     }
 }

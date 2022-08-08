@@ -15,18 +15,15 @@ return new class extends Migration
     {
         Schema::create('products', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('department_id');
             $table->string('name');
+            $table->foreignId('department_id')->nullable()->constrained('departments')->cascadeOnDelete();
             $table->string('image_path');
             $table->integer('product_code');
             $table->integer('purchasing_price');
             $table->integer('seling_price');
             $table->longText('note')->nullable();
             $table->timestamps();
-            $table->foreign('department_id')
-                ->references('id')
-                ->on('departments')
-                ->onDelete('cascade');
+
         });
     }
 

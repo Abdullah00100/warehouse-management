@@ -13,7 +13,7 @@ class ExportInventoryProductRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,9 @@ class ExportInventoryProductRequest extends FormRequest
     public function rules()
     {
         return [
-            //
+            'inventory_products' => 'required|array|min:1',
+            'inventory_products.*.id' => 'required|exists:inventory_products,id',
+            'inventory_products.*.quantity' => 'required|integer|min:1|max:256',
         ];
     }
 }
