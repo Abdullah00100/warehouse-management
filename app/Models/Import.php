@@ -12,7 +12,7 @@ class Import extends Model
     protected $fillable = ['dealer_id','bill_number','shipping_charge_price','total_price'];
 
     public function dealer(){
-        return $this->belongsTo(dealer::class);
+        return $this->belongsTo(Dealer::class);
     }
 
     public function importproduct(){
