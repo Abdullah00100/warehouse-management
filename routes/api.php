@@ -10,6 +10,7 @@ use App\Http\Controllers\ExportInventoryProductController;
 use App\Http\Controllers\import_productsController;
 use App\Http\Controllers\ImportsController;
 use App\Http\Controllers\InventoryProductsController;
+use App\Http\Controllers\StoreInventoryController;
 
 /*
 |--------------------------------------------------------------------------
