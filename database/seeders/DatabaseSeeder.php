@@ -25,7 +25,7 @@ class DatabaseSeeder extends Seeder
             // ImportProductSeeder::class,
             RoleTableSeeder::class,
             UserTableSeeder::class,
-            ExportSeeder::class,
+            //ExportSeeder::class,
             //ExportInventoryProductSeeder::class,
 
 
