@@ -12,7 +12,7 @@ class export extends Model
     public $fillable = ['bill_number','shipping_charge_price','dealer_id','has_received','total_price'];
 
     public function dealer(){
-        return $this->belongsTo(dealer::class);
+        return $this->belongsTo(Dealer::class);
     }
 
     public function inventaryProducts(){

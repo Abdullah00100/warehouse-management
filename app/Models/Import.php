@@ -13,7 +13,7 @@ class Import extends Model
 
     public function dealer()
     {
-        return $this->belongsTo(dealer::class);
+        return $this->belongsTo(Dealer::class);
     }
 
     public function products()
@@ -23,6 +23,6 @@ class Import extends Model
 
     public function importProducts()
     {
-        return $this->hasMany(ImportProduct::class);
+        return $this->hasMany(importProduct::class);
     }
 }
