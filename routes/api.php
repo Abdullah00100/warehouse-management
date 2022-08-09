@@ -44,7 +44,7 @@ Route::middleware(['auth:sanctum', 'adminsAbilities'])->group(function () {
         Route::post('update_product_by_id/{product}', [ProductController::class, 'update']);
         Route::post('delete_product_by_id/{product}', [ProductController::class, 'destroy']);
 
-
+        Route::get('get_all_inventory_products', [InventoryProductsController::class, 'index']);
         Route::post('add_inventory_products', [InventoryProductsController::class, 'store']);
         Route::get('inventory_products_by_id/{inventory_products}', [InventoryProductsController::class, 'show']);
         Route::get('edit_inventory_products_by_id/{inventory_products}', [InventoryProductsController::class, 'edit']);
